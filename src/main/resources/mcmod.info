@@ -1,0 +1,16 @@
+[
+{
+  "modid": "bottlemail",
+  "name": "BottleMail",
+  "description": "add bottlemail",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["yousui115"],
+  "credits": "no",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
