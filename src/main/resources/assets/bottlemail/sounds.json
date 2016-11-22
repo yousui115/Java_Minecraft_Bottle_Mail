@@ -1,6 +1,14 @@
 {
-  "kyupon": {
+  "gyugyu1": {
     "category": "neutral",
-    "sounds": ["kyupon"]
+    "sounds": ["bottlemail:gyugyu1"]
+  },
+  "gyugyu2": {
+    "category": "neutral",
+    "sounds": ["bottlemail:gyugyu2"]
+  },
+  "pon": {
+    "category": "neutral",
+    "sounds": ["bottlemail:pon"]
   }
 }

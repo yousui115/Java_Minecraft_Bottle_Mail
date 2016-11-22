@@ -1,0 +1,6 @@
+{
+    "parent": "BottleMail:item/bottle_mail",
+    "textures": {
+        "layer0": "BottleMail:items/bottle_mail"
+    }
+}

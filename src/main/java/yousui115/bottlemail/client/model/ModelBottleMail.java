@@ -9,7 +9,7 @@
 
 
 
-package yousui115.bottlemail.model;
+package yousui115.bottlemail.client.model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

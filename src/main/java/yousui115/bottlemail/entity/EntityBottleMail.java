@@ -1,7 +1,10 @@
-package yousui115.bottlemail;
+package yousui115.bottlemail.entity;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import yousui115.bottlemail.BottleMail;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -9,9 +12,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 //TODO: Entity継承だと自然スポーンの設定が
@@ -82,20 +86,21 @@ public class EntityBottleMail extends EntityLiving
      * ■プレイヤーが右クリックすると呼ばれる
      */
     @Override
-    public boolean interact(EntityPlayer playerIn)
+    public boolean processInteract(EntityPlayer playerIn, EnumHand handIn, @Nullable ItemStack stackIn)
     {
         //■プレイヤーが何を持っているか確認。
-        ItemStack itemstack = playerIn.getCurrentEquippedItem();
+        //ItemStack itemstack = playerIn.getCurrentEquippedItem();
 
         //■何か持ってるプレイヤーなど不要！
-        if (itemstack != null) { return false; }
+        if (stackIn != null) { return false; }
 
         if (!worldObj.isRemote)
         {
             //■紙切れを出現させる
             ItemStack stackBottle = new ItemStack(BottleMail.itemBottleMail, 1, 0);
             //worldObj.spawnEntityInWorld(new EntityItem(worldObj, playerIn.posX, playerIn.posY, playerIn.posZ, stackBottle));
-            playerIn.setCurrentItemOrArmor(0, stackBottle);
+            //playerIn.setCurrentItemOrArmor(0, stackBottle);
+            playerIn.setHeldItem(handIn, stackBottle);
 
             //■消滅
             this.setDead();
@@ -136,7 +141,7 @@ public class EntityBottleMail extends EntityLiving
                 if(idx == 1 && idz == 1) { continue; }
 
                 Block b = worldObj.getBlockState(new BlockPos(nX - 1 + idx, nY - 1, nZ - 1 + idz)).getBlock();
-                isWater = Block.isEqualTo(b, Blocks.water);
+                isWater = Block.isEqualTo(b, Blocks.WATER);
                 if (isWater == true) { break; }
             }
         }
@@ -156,8 +161,8 @@ public class EntityBottleMail extends EntityLiving
         }
 
         //■「下が砂」かつ「空の下」かつ「下の８つのブロックの内、どれかが水」かつ「近くにボトルが落ちていない」かつ「海抜0m(海面が62.875)」 ならばスポーンしてやろう
-        if (Block.isEqualTo(block, Blocks.sand) == true &&
-            !worldObj.canLightningStrike(pos) &&
+        if (Block.isEqualTo(block, Blocks.SAND) == true &&
+            !worldObj.canSeeSky(pos) &&
             isWater == true &&
             isNearBottle == false &&
             posY == 63)

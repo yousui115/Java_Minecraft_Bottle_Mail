@@ -1,41 +1,54 @@
 package yousui115.bottlemail;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.Item;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import yousui115.bottlemail.gui.GuiHandler;
-import yousui115.bottlemail.model.RenderBottleMail;
+import yousui115.bottlemail.client.gui.GuiHandler;
+import yousui115.bottlemail.entity.EntityBottleMail;
+import yousui115.bottlemail.item.ItemBottleMail;
+import yousui115.bottlemail.item.ItemPieceOfPaper;
 
 @Mod(modid = BottleMail.MOD_ID, version = BottleMail.VERSION)
 public class BottleMail
 {
     //■Mod Infomation
     public static final String MOD_ID = "bottlemail";
-    public static final String VERSION = "1.0";
+    public static final String MOD_DOMAIN = "yousui115." + MOD_ID;
+    public static final String VERSION = "MC1102_F2099_v1";
 
     @Instance(BottleMail.MOD_ID)
     public static BottleMail instance;
+
+    //■クライアント側とサーバー側で異なるインスタンスを生成
+    @SidedProxy(clientSide = MOD_DOMAIN + ".client.ClientProxy", serverSide = MOD_DOMAIN + ".CommonProxy")
+    public static CommonProxy proxy;
 
     public static final int STATUS_GUI_ID = 0;
 
     public static Item itemPieceOfPaper;
     public static final String NAME_POP = "piece_of_paper";
+    public static ResourceLocation rlPOP;
+
     public static Item itemBottleMail;
     public static final String NAME_BM  = "bottle_mail";
+    public static ResourceLocation rlBM;
+
+    public static SoundEvent Gyu1;
+    public static SoundEvent Gyu2;
+    public static SoundEvent PON;
 
     /**
      * ■初期化処理（前処理）
@@ -51,46 +64,30 @@ public class BottleMail
         TextReader reader = new TextReader(event.getSourceFile().getPath(), "assets/bottlemail/texts/test2.xml");
         reader.readText();
 
-        //■アイテムの設定
+        //■アイテムの設定・登録
         // ★紙切れ
         this.itemPieceOfPaper = (new ItemPieceOfPaper())
                                 .setUnlocalizedName(BottleMail.NAME_POP)
-                                .setCreativeTab(CreativeTabs.tabMisc)
+                                .setCreativeTab(CreativeTabs.MISC)
                                 .setHasSubtypes(true);
+        rlPOP = new ResourceLocation(MOD_ID, BottleMail.NAME_POP);
+        GameRegistry.register(itemPieceOfPaper, rlPOP);
 
         // ★ボトルメール
         this.itemBottleMail   = (new ItemBottleMail())
                                 .setMaxStackSize(1)
                                 .setUnlocalizedName(BottleMail.NAME_BM)
-                                .setCreativeTab(CreativeTabs.tabMisc)
+                                .setCreativeTab(CreativeTabs.MISC)
                                 .setHasSubtypes(false);
-
-        //■アイテムの登録
-        // ★紙切れ
-        GameRegistry.registerItem(itemPieceOfPaper, BottleMail.NAME_POP);
-        // ★ボトルメール
-        GameRegistry.registerItem(itemBottleMail  , BottleMail.NAME_BM);
+        rlBM = new ResourceLocation(MOD_ID, BottleMail.NAME_BM);
+        GameRegistry.register(itemBottleMail, rlBM);
 
         //■テクスチャ・モデル指定JSONファイル名の登録。
-        if (event.getSide().isClient())
-        {
-            // ★紙切れ
-            for (int i = 0; i < ItemPieceOfPaper.getMailMax(); i++)
-            {
-                //1IDで複数モデルを登録するなら、上のメソッドで登録した登録名を指定する。
-                ModelLoader.setCustomModelResourceLocation(itemPieceOfPaper, i,
-                            new ModelResourceLocation(BottleMail.MOD_ID + ":" + BottleMail.NAME_POP, "inventory"));
-            }
-
-            // ★ボトルメール
-            ModelLoader.setCustomModelResourceLocation(itemBottleMail, 0,
-                    new ModelResourceLocation(BottleMail.MOD_ID + ":" + BottleMail.NAME_BM, "inventory"));
-        }
+        proxy.registerModels();
 
         //■Entityの登録
-        EntityRegistry.registerGlobalEntityID(EntityBottleMail.class, "BottleMail", EntityRegistry.findGlobalUniqueEntityId(), 0xefeedf, 0xc2c1b8);
         EntityRegistry.registerModEntity(EntityBottleMail.class, "BottleMail", 1, this, 64, 10, false);
-        EntityRegistry.addSpawn("BottleMail", 2, 1, 1, EnumCreatureType.AMBIENT, (BiomeGenBase[]) BiomeGenBase.explorationBiomesList.toArray(new BiomeGenBase[0]));
+        EntityRegistry.addSpawn(EntityBottleMail.class, 2, 1, 1, EnumCreatureType.AMBIENT, (Biome[]) Biome.EXPLORATION_BIOMES_LIST.toArray(new Biome[0]));
 
     }
 
@@ -104,12 +101,13 @@ public class BottleMail
         //■GUIの登録
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
-        //■
-        if (event.getSide().isClient())
-        {
-            //■Renderの登録 及び EntityとRenderの関連付け
-            RenderingRegistry.registerEntityRenderingHandler(EntityBottleMail.class, new RenderBottleMail(Minecraft.getMinecraft().getRenderManager()));
-        }
+        //■レンダラーの生成とEntityとの関連付け
+        proxy.registerRenderers();
+
+        //■効果音の登録
+        Gyu1 = new SoundEvent(new ResourceLocation(BottleMail.MOD_ID, "gyugyu1"));
+        Gyu2 = new SoundEvent(new ResourceLocation(BottleMail.MOD_ID, "gyugyu2"));
+        PON = new SoundEvent(new ResourceLocation(BottleMail.MOD_ID, "pon"));
     }
 
     /**
@@ -120,5 +118,4 @@ public class BottleMail
     public void postInit(FMLPostInitializationEvent event)
     {
     }
-
 }

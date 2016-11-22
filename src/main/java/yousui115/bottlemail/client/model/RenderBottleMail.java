@@ -1,14 +1,15 @@
-package yousui115.bottlemail.model;
+package yousui115.bottlemail.client.model;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yousui115.bottlemail.BottleMail;
-import yousui115.bottlemail.EntityBottleMail;
+import yousui115.bottlemail.entity.EntityBottleMail;
 
 @SideOnly(Side.CLIENT)
 public class RenderBottleMail extends Render
@@ -107,5 +108,15 @@ public class RenderBottleMail extends Render
     public void doRenderShadowAndFire(Entity p_76979_1_, double p_76979_2_, double p_76979_4_, double p_76979_6_, float p_76979_8_, float p_76979_9_)
     {
         //super.doRenderShadowAndFire(p_76979_1_, p_76979_2_, p_76979_4_, p_76979_6_, p_76979_8_, p_76979_9_);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static class Factory implements IRenderFactory<EntityBottleMail>
+    {
+        @Override
+        public Render<? super EntityBottleMail> createRenderFor(RenderManager manager)
+        {
+            return new RenderBottleMail(manager);
+        }
     }
 }
