@@ -1,7 +1,5 @@
 package yousui115.bottlemail.item;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -11,9 +9,6 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -141,7 +136,7 @@ public class ItemBottleMail extends Item
                     weightSum += ItemPieceOfPaper.getMail(idx).weight;
                 }
 
-                int targetNum = (new Random()).nextInt(weightSum) + 1;
+                int targetNum = worldIn.rand.nextInt(weightSum) + 1; //(new Random()).nextInt(weightSum) + 1;
                 //System.out.println(targetNum);
                 int subID = 0;
 
@@ -159,20 +154,20 @@ public class ItemBottleMail extends Item
 //                int subID = worldIn.rand.nextInt(ItemPieceOfPaper.getMailMax());
                 ItemStack stackPaper = new ItemStack(BottleMail.itemPieceOfPaper, 1, subID);
                 Mail mail = ItemPieceOfPaper.getMail(subID);
-
-                NBTTagCompound nbt = new NBTTagCompound();
-                //■タイトル
-                nbt.setString("title", mail.strTitle);
-                //■著者
-                nbt.setString("author", mail.strAuthor);
-                //■内容
-                NBTTagList pages = new NBTTagList();
-                NBTTagString text = new NBTTagString("{\"text\":\"" + mail.strMsg + "\"}");
-                pages.appendTag(text);
-                nbt.setTag("pages", pages);
-
-                //■ItemStackにNBT登録
-                stackPaper.setTagCompound(nbt);
+//
+//                NBTTagCompound nbt = new NBTTagCompound();
+//                //■タイトル
+//                nbt.setString("title", mail.strTitle);
+//                //■著者
+//                nbt.setString("author", mail.strAuthor);
+//                //■内容
+//                NBTTagList pages = new NBTTagList();
+//                NBTTagString text = new NBTTagString("{\"text\":\"" + mail.strMsg + "\"}");
+//                pages.appendTag(text);
+//                nbt.setTag("pages", pages);
+//
+//                //■ItemStackにNBT登録
+//                stackPaper.setTagCompound(nbt);
 
                 //■紙切れ顕現
                 worldIn.spawnEntityInWorld(new EntityItem(worldIn, livingIn.posX, livingIn.posY, livingIn.posZ, stackPaper));

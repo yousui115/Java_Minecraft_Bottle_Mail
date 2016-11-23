@@ -99,10 +99,8 @@ public class EntityBottleMail extends EntityLiving
 
         if (!worldObj.isRemote)
         {
-            //■紙切れを出現させる
+            //■ボトルメイルをアイテム化して出現させる
             ItemStack stackBottle = new ItemStack(BottleMail.itemBottleMail, 1, 0);
-            //worldObj.spawnEntityInWorld(new EntityItem(worldObj, playerIn.posX, playerIn.posY, playerIn.posZ, stackBottle));
-            //playerIn.setCurrentItemOrArmor(0, stackBottle);
             playerIn.setHeldItem(handIn, stackBottle);
 
             //■消滅

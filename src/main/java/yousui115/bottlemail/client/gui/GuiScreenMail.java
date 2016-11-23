@@ -43,4 +43,14 @@ public class GuiScreenMail extends GuiScreenBook
         vertexbuffer.pos((double)(x + 0), (double)(y + 0), (double)this.zLevel).tex((double)((float)(textureX + 0) * 0.00390625F), (double)((float)(textureY + 0) * 0.00390625F)).endVertex();
         tessellator.draw();
     }
+
+    /**
+     * Returns true if this GUI should pause the game when it is displayed in single-player
+     */
+    @Override
+    public boolean doesGuiPauseGame()
+    {
+        return false;
+    }
+
 }

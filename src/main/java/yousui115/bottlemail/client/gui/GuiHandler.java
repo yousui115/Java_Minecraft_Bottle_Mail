@@ -2,9 +2,14 @@ package yousui115.bottlemail.client.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import yousui115.bottlemail.BottleMail;
+import yousui115.bottlemail.Mail;
+import yousui115.bottlemail.item.ItemPieceOfPaper;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -30,7 +35,25 @@ public class GuiHandler implements IGuiHandler
             stack != null &&
             stack.getItem() == BottleMail.itemPieceOfPaper)
         {
-            return new GuiScreenMail(player, stack, false);
+            int subID = stack.getMetadata();
+            ItemStack stackPaper = new ItemStack(BottleMail.itemPieceOfPaper, 1, subID);
+            Mail mail = ItemPieceOfPaper.getMail(subID);
+
+            NBTTagCompound nbt = new NBTTagCompound();
+            //■タイトル
+            nbt.setString("title", mail.strTitle);
+            //■著者
+            nbt.setString("author", mail.strAuthor);
+            //■内容
+            NBTTagList pages = new NBTTagList();
+            NBTTagString text = new NBTTagString("{\"text\":\"" + mail.strMsg + "\"}");
+            pages.appendTag(text);
+            nbt.setTag("pages", pages);
+
+            //■ItemStackにNBT登録
+            stackPaper.setTagCompound(nbt);
+
+            return new GuiScreenMail(player, stackPaper, false);
         }
 
         return null;

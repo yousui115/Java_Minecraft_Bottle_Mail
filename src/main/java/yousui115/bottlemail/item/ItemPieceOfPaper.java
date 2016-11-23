@@ -7,7 +7,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.StringUtils;
@@ -29,40 +28,58 @@ public class ItemPieceOfPaper extends Item
      */
     public ItemPieceOfPaper(){}
 
+    /**
+     * ■ToolTip
+     */
+    @Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-        if (stack.hasTagCompound())
+        Mail mail = this.getMail(stack.getMetadata());
+        if (mail != null && !StringUtils.isNullOrEmpty(mail.strTitle))
         {
-            NBTTagCompound nbttagcompound = stack.getTagCompound();
-            String s = nbttagcompound.getString("title");
-
-            if (!StringUtils.isNullOrEmpty(s))
-            {
-                return s;
-            }
+            return mail.strTitle;
         }
 
         return super.getItemStackDisplayName(stack);
+//        if (stack.hasTagCompound())
+//        {
+//            NBTTagCompound nbttagcompound = stack.getTagCompound();
+//            String s = nbttagcompound.getString("title");
+//
+//            if (!StringUtils.isNullOrEmpty(s))
+//            {
+//                return s;
+//            }
+//        }
+//
+//        return super.getItemStackDisplayName(stack);
     }
 
     /**
      * allows items to add custom lines of information to the mouseover description
      */
+    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
-        if (stack.hasTagCompound())
+        Mail mail = this.getMail(stack.getMetadata());
+        if (mail != null && !StringUtils.isNullOrEmpty(mail.strAuthor))// && mail.strTitle != "")
         {
-            NBTTagCompound nbttagcompound = stack.getTagCompound();
-            String s = nbttagcompound.getString("author");
-
-            if (!StringUtils.isNullOrEmpty(s))
-            {
-                tooltip.add(TextFormatting.GRAY + I18n.translateToLocalFormatted("book.byAuthor", new Object[] {s}));
-            }
-
-            tooltip.add(TextFormatting.GRAY + I18n.translateToLocal("book.generation." + nbttagcompound.getInteger("generation")));
+            tooltip.add(TextFormatting.GRAY + I18n.translateToLocalFormatted("book.byAuthor", new Object[] {mail.strAuthor}));
         }
+
+//        if (stack.hasTagCompound())
+//        {
+//            NBTTagCompound nbttagcompound = stack.getTagCompound();
+//            String s = "abcde";//nbttagcompound.getString("author");
+//
+//            if (!StringUtils.isNullOrEmpty(s))
+//            {
+//                tooltip.add(TextFormatting.GRAY + I18n.translateToLocalFormatted("book.byAuthor", new Object[] {s}));
+//            }
+//
+//            tooltip.add(TextFormatting.GRAY + I18n.translateToLocal("book.generation." + nbttagcompound.getInteger("generation")));
+//        }
     }
 
     /**
@@ -81,6 +98,7 @@ public class ItemPieceOfPaper extends Item
      * ■
      * @param subItems The List of sub-items. This is a List of ItemStacks.
      */
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List subItems)
     {

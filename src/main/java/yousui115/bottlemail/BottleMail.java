@@ -27,7 +27,7 @@ public class BottleMail
     //■Mod Infomation
     public static final String MOD_ID = "bottlemail";
     public static final String MOD_DOMAIN = "yousui115." + MOD_ID;
-    public static final String VERSION = "MC1102_F2099_v1";
+    public static final String VERSION = "MC1102_F2099_v3";
 
     @Instance(BottleMail.MOD_ID)
     public static BottleMail instance;
