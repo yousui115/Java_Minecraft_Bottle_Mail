@@ -1,8 +1,9 @@
 # [MinecraftMod] ボトルメール [MC1.10.2]
 
-## ■DL (M1102_F2099_v2)
+## ■DL (M1102_F2099_v3)
 
-https://www.dropbox.com/s/csxxb5pnvqy6qmt/BottleMail_M1102_F2099_v2.jar?dl=0
+https://www.dropbox.com/s/c6sey5niwkuyzts/BottleMail_M1102_F2099_v3.jar?dl=0<br>
+※v2以前のメールの一部が、今回以降のメールとスタック出来ません。ご注意下さい。<br>
 
 ## ■動作環境
 
