@@ -82,13 +82,15 @@ public class BottleMail
         rlBM = new ResourceLocation(MOD_ID, BottleMail.NAME_BM);
         GameRegistry.register(itemBottleMail, rlBM);
 
-        //■テクスチャ・モデル指定JSONファイル名の登録。
-        proxy.registerModels();
-
         //■Entityの登録
         EntityRegistry.registerModEntity(EntityBottleMail.class, "BottleMail", 1, this, 64, 10, false);
         EntityRegistry.addSpawn(EntityBottleMail.class, 2, 1, 1, EnumCreatureType.AMBIENT, (Biome[]) Biome.EXPLORATION_BIOMES_LIST.toArray(new Biome[0]));
 
+        //■テクスチャ・モデル指定JSONファイル名の登録。
+        proxy.registerModels();
+
+        //■レンダラーの生成とEntityとの関連付け
+        proxy.registerRenderers();
     }
 
     /**
@@ -100,9 +102,6 @@ public class BottleMail
     {
         //■GUIの登録
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-
-        //■レンダラーの生成とEntityとの関連付け
-        proxy.registerRenderers();
 
         //■効果音の登録
         Gyu1 = new SoundEvent(new ResourceLocation(BottleMail.MOD_ID, "gyugyu1"));

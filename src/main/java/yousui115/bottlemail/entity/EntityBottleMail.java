@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import yousui115.bottlemail.BottleMail;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -17,6 +16,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import yousui115.bottlemail.BottleMail;
 
 //TODO: Entity継承だと自然スポーンの設定が
 //      超めんどくせーっぽいからEntityLivingを継承してる。
@@ -91,6 +91,9 @@ public class EntityBottleMail extends EntityLiving
         //■プレイヤーが何を持っているか確認。
         //ItemStack itemstack = playerIn.getCurrentEquippedItem();
 
+        //■オフハンドでは取れない。
+        if (handIn == EnumHand.OFF_HAND) { return false;}
+
         //■何か持ってるプレイヤーなど不要！
         if (stackIn != null) { return false; }
 
@@ -106,7 +109,7 @@ public class EntityBottleMail extends EntityLiving
             this.setDead();
         }
 
-        return false;
+        return true;
     }
 
     /**
