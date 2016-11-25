@@ -28,4 +28,8 @@
     <message>\n\n\n\n\n      お前をみている</message>
     <weight>10</weight>
   </mail>
+  <mail>
+    <item>nuggetGold</item>
+    <weight>10</weight>
+  </mail>
 </mails>

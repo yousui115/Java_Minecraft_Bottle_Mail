@@ -12,7 +12,7 @@ import yousui115.bottlemail.BottleMail;
 import yousui115.bottlemail.entity.EntityBottleMail;
 
 @SideOnly(Side.CLIENT)
-public class RenderBottleMail extends Render
+public class RenderBottleMail extends Render<EntityBottleMail>
 {
     protected ModelBottleMail modelBottle;
 
@@ -29,7 +29,7 @@ public class RenderBottleMail extends Render
      * ■描画処理
      */
     @Override
-    public void doRender(Entity entity, double x, double y, double z, float p_76986_8_, float partialTicks)
+    public void doRender(EntityBottleMail bottle, double x, double y, double z, float p_76986_8_, float partialTicks)
     {
         //memo:  Techneで出力したModelBottleMailを呼ぶ際、
         //      Modelのソースを弄ると、モデルを手直しした時に修正が大変なので、
@@ -38,10 +38,6 @@ public class RenderBottleMail extends Render
         //      登録とは逆の順番で処理される為（FILO）、注意が必要。
         //       実はもっと楽な方法があるかもしれない。誰かおせーておせーて
 
-        //■用があるはEntityBottleMailだけ。（つーか、他のはこないはず）
-        if (!(entity instanceof EntityBottleMail)) { return; }
-        EntityBottleMail bottle = (EntityBottleMail)entity;
-
         //■行列のコピー
         GlStateManager.pushMatrix();
 
@@ -49,7 +45,7 @@ public class RenderBottleMail extends Render
         GlStateManager.enableRescaleNormal();
 
         //■画像をバインド
-        this.bindEntityTexture(entity);
+        this.bindEntityTexture(bottle);
 
 //        //▼ライティング処理On
 //        GlStateManager.enableLighting();
@@ -73,7 +69,7 @@ public class RenderBottleMail extends Render
 //        worldrenderer.setNormal(0.0F, 1.0F, 0.0F);
 
         //★Techneで出力したクラスをそのまま呼んでる。
-        modelBottle.render(entity, 0, 0, 0, 0, 0, 1);
+        modelBottle.render(bottle, 0, 0, 0, 0, 0, 1);
 
 //        GlStateManager.shadeModel(GL11.GL_FLAT);
 //        GlStateManager.disableBlend();
@@ -90,7 +86,7 @@ public class RenderBottleMail extends Render
      * ■テクスチャURI
      */
     @Override
-    protected ResourceLocation getEntityTexture(Entity entity)
+    protected ResourceLocation getEntityTexture(EntityBottleMail entity)
     {
         return new ResourceLocation(BottleMail.MOD_ID + ":textures/models/ModelBottleMail.png");
     }
@@ -99,7 +95,7 @@ public class RenderBottleMail extends Render
      * ■頭の上に名前が付くか否か
      */
     @Override
-    protected boolean canRenderName(Entity entity)
+    protected boolean canRenderName(EntityBottleMail entity)
     {
         return false;
     }

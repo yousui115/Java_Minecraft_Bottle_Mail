@@ -4,16 +4,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -163,45 +159,41 @@ public class TextReader
                 //■ノードアイテムの取得
                 Node node1 = nodelist1.item(j);
 
+                //■要素
+                Node item = node1.getChildNodes().item(0);
+                if (item == null) { continue; }
+                String str = item.getNodeValue();
+                System.out.println(str);
+
                 //■欲しいノードを選別
                 if (node1.getNodeName().contains("title"))
                 {
                     //■タイトル
-                    String str = node1.getChildNodes().item(0).getNodeValue();
-                    System.out.println(str);
                     mail.strTitle = str;
                 }
                 else if (node1.getNodeName().contains("author"))
                 {
                     //■著者
-                    String str = node1.getChildNodes().item(0).getNodeValue();
-                    System.out.println(str);
                     mail.strAuthor = str;
                 }
                 else if (node1.getNodeName().contains("message"))
                 {
                     //■本文
-                    String str = node1.getChildNodes().item(0).getNodeValue();
-                    System.out.println(str);
-                    //mail.strMsg = parse(str);
                     mail.strMsg = str;
                 }
                 else if (node1.getNodeName().contains("item"))
                 {
                     //■同梱アイテム
-                    String str = node1.getChildNodes().item(0).getNodeValue();
-                    System.out.println(str);
-                    List<ItemStack> stacks = OreDictionary.getOres(str);
-                    if (stacks.size() != 0)
-                    {
-                        mail.stack = stacks.get(0).copy();
-                    }
+                    mail.strItem = str;
+//                    List<ItemStack> stacks = OreDictionary.getOres(str);
+//                    if (stacks.size() != 0)
+//                    {
+//                        mail.stack = stacks.get(0).copy();
+//                    }
                 }
                 else if (node1.getNodeName().contains("weight"))
                 {
                     //■重み付け
-                    String str = node1.getChildNodes().item(0).getNodeValue();
-                    System.out.println(str);
                     mail.weight = Integer.parseInt(str);
                 }
             }

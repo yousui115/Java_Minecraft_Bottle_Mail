@@ -13,6 +13,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -169,8 +170,11 @@ public class ItemBottleMail extends Item
 //                //■ItemStackにNBT登録
 //                stackPaper.setTagCompound(nbt);
 
-                //■紙切れ顕現
-                worldIn.spawnEntityInWorld(new EntityItem(worldIn, livingIn.posX, livingIn.posY, livingIn.posZ, stackPaper));
+                //■メッセージが書かれているなら、紙切れ顕現
+                if (!StringUtils.isNullOrEmpty(mail.strMsg))
+                {
+                    worldIn.spawnEntityInWorld(new EntityItem(worldIn, livingIn.posX, livingIn.posY, livingIn.posZ, stackPaper));
+                }
 
                 //■同梱アイテムがあれば顕現
                 if (mail.stack != null)

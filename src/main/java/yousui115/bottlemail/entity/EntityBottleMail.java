@@ -153,7 +153,7 @@ public class EntityBottleMail extends EntityLiving
         List<Entity> list = worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(dExpand, 0, dExpand));
         for (Entity entity : list)
         {
-            //■EntityBonfireが既に置いてあるとfalse
+            //■EntityBottleMailが周囲に置いてあるとfalse
             if (entity instanceof EntityBottleMail)
             {
                 isNearBottle = true;

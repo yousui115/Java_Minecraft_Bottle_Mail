@@ -134,6 +134,11 @@ public class ItemPieceOfPaper extends Item
         return null;
     }
 
+    public static ArrayList<Mail> getMails()
+    {
+        return listMails;
+    }
+
     public static int getMailMax()
     {
         return listMails.size();
