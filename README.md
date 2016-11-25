@@ -1,9 +1,9 @@
 # [MinecraftMod] ボトルメール [MC1.10.2]
 
-## ■DL (M1102_F2099_v3)
+## ■DL (M1102_F2099_v4)
 
-https://www.dropbox.com/s/c6sey5niwkuyzts/BottleMail_M1102_F2099_v3.jar?dl=0<br>
-※v2以前のメールの一部が、今回以降のメールとスタック出来ません。ご注意下さい。<br>
+https://www.dropbox.com/s/db39hjz0j5euzii/BottleMail_M1102_F2099_v4.jar?dl=0<br>
+※v2以前のメールの一部が、v3以降のメールとスタック出来ません。ご注意下さい。<br>
 
 ## ■動作環境
 
@@ -25,6 +25,7 @@ Forge 2099<br>
 - ボトルメールを開けるには、右手にボトルを持ち、右クリックを長押し。<br>
 - コルクを抜こうとしているSEが鳴り終わったら、右クリックを解放。<br>
 - アイテムが同梱されている物もある。<br>
+- アイテムしか入っていない物もある。<br>
 
 ## ■謝辞
 
