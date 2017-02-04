@@ -3,8 +3,8 @@
 <mails>
   <mail>
     <title>手紙</title>
-    <message>見知らぬ人へ\n こんにちは。この手紙を拾ってくれてありがとう。\n どんな所でこの手紙が読まれているかを考えながら書いています。そこはどんな場所ですか？村を出た事がない私には想像もつかない場所かもしれません。\n もし、貴方が冒険者の方なら、色々なお話が聞きたいです。私の村は(これ以上は掠れていて読めない)</message>
-    <item>feather</item>
+    <message>見知らぬ人へ\n こんにちは。この手紙を拾ってくれてありがとう。\n どんな所でこの手紙が読まれているかを考えながら書いています。そこはどんな場所ですか？村を出た事がない私には想像もつかない場所かもしれません。\n もし、貴方が冒険者の方なら、色々なお話が聞きたいです。地図を頼りに是非訪ねてくださいね。</message>
+    <item>map_village</item>
     <weight>10</weight>
   </mail>
   <mail>
@@ -30,6 +30,10 @@
   </mail>
   <mail>
     <item>nuggetGold</item>
+    <weight>10</weight>
+  </mail>
+    <mail>
+    <item>map_mansion</item>
     <weight>10</weight>
   </mail>
 </mails>

@@ -75,15 +75,18 @@ public class ItemBottleMail extends Item
      */
     @Override
 //    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+//    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
     {
+        ItemStack stack = playerIn.getHeldItem(handIn);
+
         //■スニーキング かつ メインハンド
-        if (/*playerIn.isSneaking() &&*/ EnumHand.MAIN_HAND == hand)
+        if (/*playerIn.isSneaking() &&*/ EnumHand.MAIN_HAND == handIn)
         {
-            playerIn.setActiveHand(hand);
-            return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+            playerIn.setActiveHand(handIn);
+            return new ActionResult(EnumActionResult.SUCCESS, stack);
         }
-        return new ActionResult(EnumActionResult.PASS, itemStackIn);
+        return new ActionResult(EnumActionResult.PASS, stack);
     }
 
     /**
@@ -121,11 +124,18 @@ public class ItemBottleMail extends Item
         if (timeLeft < 71930)
         {
             //■アイテム消費
-            --stackIn.stackSize;
+//            --stackIn.stackSize;
+            int size = stackIn.func_190916_E() - 1;
 
-            if (stackIn.stackSize == 0)
+
+//            if (stackIn.stackSize == 0)
+            if (size <= 0)
             {
                 player.inventory.deleteStack(stackIn);
+            }
+            else
+            {
+                stackIn.func_190920_e(size);
             }
 
             if (!worldIn.isRemote)
@@ -151,24 +161,9 @@ public class ItemBottleMail extends Item
                     targetNum -= ItemPieceOfPaper.getMail(idx).weight;
                 }
 
-
-//                int subID = worldIn.rand.nextInt(ItemPieceOfPaper.getMailMax());
                 ItemStack stackPaper = new ItemStack(BottleMail.itemPieceOfPaper, 1, subID);
+
                 Mail mail = ItemPieceOfPaper.getMail(subID);
-//
-//                NBTTagCompound nbt = new NBTTagCompound();
-//                //■タイトル
-//                nbt.setString("title", mail.strTitle);
-//                //■著者
-//                nbt.setString("author", mail.strAuthor);
-//                //■内容
-//                NBTTagList pages = new NBTTagList();
-//                NBTTagString text = new NBTTagString("{\"text\":\"" + mail.strMsg + "\"}");
-//                pages.appendTag(text);
-//                nbt.setTag("pages", pages);
-//
-//                //■ItemStackにNBT登録
-//                stackPaper.setTagCompound(nbt);
 
                 //■メッセージが書かれているなら、紙切れ顕現
                 if (!StringUtils.isNullOrEmpty(mail.strMsg))
@@ -177,9 +172,23 @@ public class ItemBottleMail extends Item
                 }
 
                 //■同梱アイテムがあれば顕現
-                if (mail.stack != null)
+                ItemStack stack = ItemStack.field_190927_a;
+                if (!mail.stack.func_190926_b())
                 {
-                    worldIn.spawnEntityInWorld(new EntityItem(worldIn, livingIn.posX, livingIn.posY, livingIn.posZ, mail.stack.copy()));
+                    stack = mail.stack.copy();
+                }
+                else if (mail.strItem.equals("map_mansion"))
+                {
+                    stack = Mail.createMansionMap(worldIn, livingIn.getPosition(), "Mansion");
+                }
+                else if (mail.strItem.equals("map_village"))
+                {
+                    stack = Mail.createMansionMap(worldIn, livingIn.getPosition(), "Village");
+                }
+
+                if (!stack.func_190926_b())
+                {
+                    worldIn.spawnEntityInWorld(new EntityItem(worldIn, livingIn.posX, livingIn.posY, livingIn.posZ, stack));
                 }
             }
 

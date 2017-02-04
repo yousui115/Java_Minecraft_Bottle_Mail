@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
@@ -87,11 +88,12 @@ public class ItemPieceOfPaper extends Item
      */
     @Override
 //    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+//    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
     {
         playerIn.openGui(BottleMail.instance, BottleMail.STATUS_GUI_ID, worldIn, MathHelper.ceiling_double_int(playerIn.posX), MathHelper.ceiling_double_int(playerIn.posY), MathHelper.ceiling_double_int(playerIn.posZ));
 
-        return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
+        return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 
     /**
@@ -100,7 +102,8 @@ public class ItemPieceOfPaper extends Item
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, List subItems)
+//    public void getSubItems(Item itemIn, CreativeTabs tab, List subItems)
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
         int i = ItemPieceOfPaper.listMails.size();
 

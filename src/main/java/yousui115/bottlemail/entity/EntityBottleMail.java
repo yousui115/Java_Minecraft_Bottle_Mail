@@ -2,8 +2,6 @@ package yousui115.bottlemail.entity;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -86,16 +84,17 @@ public class EntityBottleMail extends EntityLiving
      * ■プレイヤーが右クリックすると呼ばれる
      */
     @Override
-    public boolean processInteract(EntityPlayer playerIn, EnumHand handIn, @Nullable ItemStack stackIn)
+//    public boolean processInteract(EntityPlayer playerIn, EnumHand handIn, @Nullable ItemStack stackIn)
+    public boolean processInteract(EntityPlayer playerIn, EnumHand handIn)
     {
-        //■プレイヤーが何を持っているか確認。
-        //ItemStack itemstack = playerIn.getCurrentEquippedItem();
-
         //■オフハンドでは取れない。
         if (handIn == EnumHand.OFF_HAND) { return false;}
 
+        //■プレイヤーが何を持っているか確認。
+        ItemStack itemstack = playerIn.getHeldItem(handIn);
+
         //■何か持ってるプレイヤーなど不要！
-        if (stackIn != null) { return false; }
+        if (!itemstack.func_190926_b()) { return false; }
 
         if (!worldObj.isRemote)
         {

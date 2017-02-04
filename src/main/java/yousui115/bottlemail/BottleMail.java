@@ -27,7 +27,7 @@ public class BottleMail
     //■Mod Infomation
     public static final String MOD_ID = "bottlemail";
     public static final String MOD_DOMAIN = "yousui115." + MOD_ID;
-    public static final String VERSION = "MC1102_F2099_v4";
+    public static final String VERSION = "MC1110_F2189_v1";
 
     @Instance(BottleMail.MOD_ID)
     public static BottleMail instance;
@@ -49,6 +49,8 @@ public class BottleMail
     public static SoundEvent Gyu1;
     public static SoundEvent Gyu2;
     public static SoundEvent PON;
+
+    public static int weightSpawn = 5;
 
     /**
      * ■初期化処理（前処理）
@@ -83,8 +85,8 @@ public class BottleMail
         GameRegistry.register(itemBottleMail, rlBM);
 
         //■Entityの登録
-        EntityRegistry.registerModEntity(EntityBottleMail.class, "BottleMail", 1, this, 64, 10, false);
-        EntityRegistry.addSpawn(EntityBottleMail.class, 2, 1, 1, EnumCreatureType.AMBIENT, (Biome[]) Biome.EXPLORATION_BIOMES_LIST.toArray(new Biome[0]));
+        EntityRegistry.registerModEntity(rlBM, EntityBottleMail.class, "BottleMail", 1, this, 64, 10, false);
+        EntityRegistry.addSpawn(EntityBottleMail.class, weightSpawn, 1, 1, EnumCreatureType.AMBIENT, (Biome[]) Biome.EXPLORATION_BIOMES_LIST.toArray(new Biome[0]));
 
         //■テクスチャ・モデル指定JSONファイル名の登録。
         proxy.registerModels();
