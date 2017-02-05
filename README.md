@@ -1,14 +1,13 @@
-# [MinecraftMod] ボトルメール [MC1.10.2]
+# [MinecraftMod] ボトルメール [MC1.11]
 
-## ■DL (M1102_F2099_v4)
+## ■DL (M1110_F2189_v1)
 
-https://www.dropbox.com/s/db39hjz0j5euzii/BottleMail_M1102_F2099_v4.jar?dl=0<br>
-※v2以前のメールの一部が、v3以降のメールとスタック出来ません。ご注意下さい。<br>
+https://www.dropbox.com/s/9z9nv7e36wyxig4/bottlemail_M1110_F2189_v1.jar?dl=0<br>
 
 ## ■動作環境
 
-Minecraft 1.10.2<br>
-Forge 2099<br>
+Minecraft 1.11<br>
+Forge 2189<br>
 
 ## ■はじめに
 
