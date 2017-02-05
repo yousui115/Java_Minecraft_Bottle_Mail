@@ -40,6 +40,7 @@ public class Mail
             }
             else
             {
+                stack = ItemStack.field_190927_a;
                 System.out.println("[BottleMail Err] \"" + strItem + "\" is not registered in OreDictionary.");
             }
         }
