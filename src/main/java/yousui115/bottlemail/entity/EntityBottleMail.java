@@ -29,7 +29,7 @@ public class EntityBottleMail extends EntityLiving
         super(worldIn);
 
         //■角度
-        fRot = this.worldObj.rand.nextFloat() * 90.0f;
+        fRot = this.getEntityWorld().rand.nextFloat() * 90.0f;
     }
 
     public EntityBottleMail(World worldIn, double dx, double dy, double dz)
@@ -94,9 +94,9 @@ public class EntityBottleMail extends EntityLiving
         ItemStack itemstack = playerIn.getHeldItem(handIn);
 
         //■何か持ってるプレイヤーなど不要！
-        if (!itemstack.func_190926_b()) { return false; }
+        if (!itemstack.isEmpty()) { return false; }
 
-        if (!worldObj.isRemote)
+        if (!this.getEntityWorld().isRemote)
         {
             //■ボトルメイルをアイテム化して出現させる
             ItemStack stackBottle = new ItemStack(BottleMail.itemBottleMail, 1, 0);
@@ -124,13 +124,13 @@ public class EntityBottleMail extends EntityLiving
     public boolean getCanSpawnHere()
     {
         //■スポーンの対象地点
-        int nX = MathHelper.floor_double(posX);
-        int nY = MathHelper.floor_double(posY);
-        int nZ = MathHelper.floor_double(posZ);
+        int nX = MathHelper.floor(posX);
+        int nY = MathHelper.floor(posY);
+        int nZ = MathHelper.floor(posZ);
 
         //■一つ下の段のブロック情報を取得
         BlockPos pos = new BlockPos(nX, nY - 1, nZ);
-        Block block = worldObj.getBlockState(pos).getBlock();
+        Block block = this.getEntityWorld().getBlockState(pos).getBlock();
         boolean isWater = false;
 
         //■周りに水があるか否か
@@ -140,7 +140,7 @@ public class EntityBottleMail extends EntityLiving
             {
                 if(idx == 1 && idz == 1) { continue; }
 
-                Block b = worldObj.getBlockState(new BlockPos(nX - 1 + idx, nY - 1, nZ - 1 + idz)).getBlock();
+                Block b = this.getEntityWorld().getBlockState(new BlockPos(nX - 1 + idx, nY - 1, nZ - 1 + idz)).getBlock();
                 isWater = Block.isEqualTo(b, Blocks.WATER);
                 if (isWater == true) { break; }
             }
@@ -149,7 +149,7 @@ public class EntityBottleMail extends EntityLiving
         //■近くのEntityをリストアップ
         boolean isNearBottle = false;
         double dExpand = 15f;
-        List<Entity> list = worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(dExpand, 0, dExpand));
+        List<Entity> list = this.getEntityWorld().getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(dExpand, 0, dExpand));
         for (Entity entity : list)
         {
             //■EntityBottleMailが周囲に置いてあるとfalse
@@ -162,7 +162,7 @@ public class EntityBottleMail extends EntityLiving
 
         //■「下が砂」かつ「空の下」かつ「下の８つのブロックの内、どれかが水」かつ「近くにボトルが落ちていない」かつ「海抜0m(海面が62.875)」 ならばスポーンしてやろう
         if (Block.isEqualTo(block, Blocks.SAND) == true &&
-            !worldObj.canSeeSky(pos) &&
+            !this.getEntityWorld().canSeeSky(pos) &&
             isWater == true &&
             isNearBottle == false &&
             posY == 63)

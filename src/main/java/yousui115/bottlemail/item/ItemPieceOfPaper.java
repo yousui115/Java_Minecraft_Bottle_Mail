@@ -91,7 +91,7 @@ public class ItemPieceOfPaper extends Item
 //    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
     {
-        playerIn.openGui(BottleMail.instance, BottleMail.STATUS_GUI_ID, worldIn, MathHelper.ceiling_double_int(playerIn.posX), MathHelper.ceiling_double_int(playerIn.posY), MathHelper.ceiling_double_int(playerIn.posZ));
+        playerIn.openGui(BottleMail.instance, BottleMail.STATUS_GUI_ID, worldIn, MathHelper.ceil(playerIn.posX), MathHelper.ceil(playerIn.posY), MathHelper.ceil(playerIn.posZ));
 
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }

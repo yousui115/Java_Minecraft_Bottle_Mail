@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
@@ -74,8 +75,6 @@ public class ItemBottleMail extends Item
      * ■右クリックを押すと呼ばれる。
      */
     @Override
-//    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
-//    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
     {
         ItemStack stack = playerIn.getHeldItem(handIn);
@@ -114,6 +113,7 @@ public class ItemBottleMail extends Item
     /**
      * Called when the player stops using an Item (stops holding the right mouse button).
      */
+    @Override
     public void onPlayerStoppedUsing(ItemStack stackIn, World worldIn, EntityLivingBase livingIn, int timeLeft)
     {
         //※timeLeft 72000 -> 0
@@ -124,8 +124,7 @@ public class ItemBottleMail extends Item
         if (timeLeft < 71930)
         {
             //■アイテム消費
-//            --stackIn.stackSize;
-            int size = stackIn.func_190916_E() - 1;
+            int size = stackIn.getCount() - 1;
 
 
 //            if (stackIn.stackSize == 0)
@@ -135,7 +134,7 @@ public class ItemBottleMail extends Item
             }
             else
             {
-                stackIn.func_190920_e(size);
+                stackIn.setCount(size);
             }
 
             if (!worldIn.isRemote)
@@ -168,28 +167,36 @@ public class ItemBottleMail extends Item
                 //■メッセージが書かれているなら、紙切れ顕現
                 if (!StringUtils.isNullOrEmpty(mail.strMsg))
                 {
-                    worldIn.spawnEntityInWorld(new EntityItem(worldIn, livingIn.posX, livingIn.posY, livingIn.posZ, stackPaper));
+                    worldIn.spawnEntity(new EntityItem(worldIn, livingIn.posX, livingIn.posY, livingIn.posZ, stackPaper));
                 }
 
                 //■同梱アイテムがあれば顕現
-                ItemStack stack = ItemStack.field_190927_a;
-                if (!mail.stack.func_190926_b())
+                ItemStack stack = ItemStack.EMPTY;
+                //▼同梱アイテムがセットされてる
+                if (!mail.stack.isEmpty())
                 {
                     stack = mail.stack.copy();
                 }
+                //▼森の館マップ
                 else if (mail.strItem.equals("map_mansion"))
                 {
                     stack = Mail.createMansionMap(worldIn, livingIn.getPosition(), "Mansion");
                 }
+                //▼村までのマップ
                 else if (mail.strItem.equals("map_village"))
                 {
                     stack = Mail.createMansionMap(worldIn, livingIn.getPosition(), "Village");
                 }
 
-                if (!stack.func_190926_b())
+                //■アイテム名が設定されているのに、ItemStackを持ってない。
+                if (!StringUtils.isNullOrEmpty(mail.strItem) && stack.isEmpty())
                 {
-                    worldIn.spawnEntityInWorld(new EntityItem(worldIn, livingIn.posX, livingIn.posY, livingIn.posZ, stack));
+                    //■変わりに羽をあげよう。
+                    stack = new ItemStack(Items.FEATHER);
                 }
+
+                //■顕現！
+                worldIn.spawnEntity(new EntityItem(worldIn, livingIn.posX, livingIn.posY, livingIn.posZ, stack));
             }
 
             //■ぽん！

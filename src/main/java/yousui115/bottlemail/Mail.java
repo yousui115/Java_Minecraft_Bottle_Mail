@@ -29,7 +29,7 @@ public class Mail
     {
         if (StringUtils.isNullOrEmpty(strItem) || strItem.substring(0, 4).equals("map_"))
         {
-            stack = ItemStack.field_190927_a;
+            stack = ItemStack.EMPTY;
         }
         else
         {
@@ -40,6 +40,7 @@ public class Mail
             }
             else
             {
+                stack = ItemStack.EMPTY;
                 System.out.println("[BottleMail Err] \"" + strItem + "\" is not registered in OreDictionary.");
             }
         }
@@ -54,7 +55,7 @@ public class Mail
      */
     public static ItemStack createMansionMap(World worldIn, BlockPos posIn, String strType)
     {
-        ItemStack stack = ItemStack.field_190927_a;
+        ItemStack stack = ItemStack.EMPTY;
         if (worldIn.isRemote) { return stack; }
 
         MapDecoration.Type type = MapDecoration.Type.TARGET_POINT;
@@ -63,13 +64,13 @@ public class Mail
             type = MapDecoration.Type.MANSION;
         }
 
-        BlockPos blockpos = worldIn.func_190528_a(strType, posIn, true);
+        BlockPos blockpos = worldIn.findNearestStructure(strType, posIn, true);
         if (blockpos != null)
         {
-            stack = ItemMap.func_190906_a(worldIn, (double)blockpos.getX(), (double)blockpos.getZ(), (byte)2, true, true);
-            ItemMap.func_190905_a(worldIn, stack);
-            MapData.func_191094_a(stack, blockpos, "+", type);
-            stack.func_190924_f("filled_map." + strType.toLowerCase(Locale.ROOT));
+            stack = ItemMap.setupNewMap(worldIn, (double)blockpos.getX(), (double)blockpos.getZ(), (byte)2, true, true);
+            ItemMap.renderBiomePreviewMap(worldIn, stack);
+            MapData.addTargetDecoration(stack, blockpos, "+", type);
+            stack.setTranslatableName("filled_map." + strType.toLowerCase(Locale.ROOT));
         }
         return stack;
     }
