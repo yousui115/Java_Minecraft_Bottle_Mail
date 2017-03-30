@@ -180,12 +180,17 @@ public class ItemBottleMail extends Item
                 //▼森の館マップ
                 else if (mail.strItem.equals("map_mansion"))
                 {
-                    stack = Mail.createMansionMap(worldIn, livingIn.getPosition(), "Mansion");
+                    stack = Mail.createMap(worldIn, livingIn.getPosition(), "Mansion");
                 }
                 //▼村までのマップ
                 else if (mail.strItem.equals("map_village"))
                 {
-                    stack = Mail.createMansionMap(worldIn, livingIn.getPosition(), "Village");
+                    stack = Mail.createMap(worldIn, livingIn.getPosition(), "Village");
+                }
+                //▼トレジャーマップ
+                else if (mail.strItem.equals("map_woodchest"))
+                {
+                    stack = Mail.createMap(worldIn, livingIn.getPosition(), "WoodChest");
                 }
 
                 //■アイテム名が設定されているのに、ItemStackを持ってない。

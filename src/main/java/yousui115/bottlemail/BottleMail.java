@@ -6,6 +6,9 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.structure.MapGenStructureIO;
+import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -18,8 +21,11 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import yousui115.bottlemail.client.gui.GuiHandler;
 import yousui115.bottlemail.entity.EntityBottleMail;
+import yousui115.bottlemail.event.EventHndl;
 import yousui115.bottlemail.item.ItemBottleMail;
 import yousui115.bottlemail.item.ItemPieceOfPaper;
+import yousui115.bottlemail.structure.ComponentTreasurePieces;
+import yousui115.bottlemail.structure.MapGenWoodChest;
 
 @Mod(modid = BottleMail.MOD_ID, version = BottleMail.VERSION)
 public class BottleMail
@@ -27,7 +33,7 @@ public class BottleMail
     //■Mod Infomation
     public static final String MOD_ID = "bottlemail";
     public static final String MOD_DOMAIN = "yousui115." + MOD_ID;
-    public static final String VERSION = "MC1112_F2228_v1";
+    public static final String VERSION = "MC1112_F2228_v2";
 
     @Instance(BottleMail.MOD_ID)
     public static BottleMail instance;
@@ -51,6 +57,8 @@ public class BottleMail
     public static SoundEvent PON;
 
     public static int weightSpawn = 5;
+
+    public static ResourceLocation WOOD_CHEST;
 
     /**
      * ■初期化処理（前処理）
@@ -93,6 +101,11 @@ public class BottleMail
 
         //■レンダラーの生成とEntityとの関連付け
         proxy.registerRenderers();
+
+        //■チェスト
+        WOOD_CHEST = new ResourceLocation(MOD_ID, "chests/woodchest");
+
+        LootTableList.register(WOOD_CHEST);
     }
 
     /**
@@ -105,10 +118,18 @@ public class BottleMail
         //■GUIの登録
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
-        //■効果音の登録
+        //■効果音の生成
         Gyu1 = new SoundEvent(new ResourceLocation(BottleMail.MOD_ID, "gyugyu1"));
         Gyu2 = new SoundEvent(new ResourceLocation(BottleMail.MOD_ID, "gyugyu2"));
         PON = new SoundEvent(new ResourceLocation(BottleMail.MOD_ID, "pon"));
+
+        //■
+        MapGenStructureIO.registerStructure(MapGenWoodChest.Start.class, "Treasure");
+        ComponentTreasurePieces.registerTreasurePieces();
+
+//        MinecraftForge.TERRAIN_GEN_BUS.register(new EventHndl());
+        MinecraftForge.EVENT_BUS.register(new EventHndl());
+
     }
 
     /**

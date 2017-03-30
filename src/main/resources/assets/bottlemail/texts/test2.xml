@@ -5,7 +5,7 @@
     <title>手紙</title>
     <message>見知らぬ人へ\n こんにちは。この手紙を拾ってくれてありがとう。\n どんな所でこの手紙が読まれているかを考えながら書いています。そこはどんな場所ですか？村を出た事がない私には想像もつかない場所かもしれません。\n もし、貴方が冒険者の方なら、色々なお話が聞きたいです。地図を頼りに是非訪ねてくださいね。</message>
     <item>map_village</item>
-    <weight>10</weight>
+    <weight>5</weight>
   </mail>
   <mail>
     <title>アトラスのメモ</title>
@@ -32,8 +32,13 @@
     <item>nuggetGold</item>
     <weight>10</weight>
   </mail>
-    <mail>
+  <mail>
     <item>map_mansion</item>
-    <weight>10</weight>
+    <weight>5</weight>
+  </mail>
+  <mail>
+    <title>元冒険者の手紙</title>
+    <message> 別世界に居るという、「黒き竜」を討伐する為に今まで探してきたが、私には見つける事が出来なかった。\n 膝に矢を受けてしまったので、冒険者を引退して、村で余生を過ごす事に決めた。\n 持っていた資材は目印の木の下に埋めてある。見つけた奴は好きに持って行け。</message>
+    <item>map_woodchest</item>
   </mail>
 </mails>

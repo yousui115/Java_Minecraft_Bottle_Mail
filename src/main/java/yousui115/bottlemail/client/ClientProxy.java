@@ -38,7 +38,5 @@ public class ClientProxy extends CommonProxy
     {
         //■Renderの登録 及び EntityとRenderの関連付け
         RenderingRegistry.registerEntityRenderingHandler(EntityBottleMail.class, new RenderBottleMail.Factory());
-
-
     }
 }

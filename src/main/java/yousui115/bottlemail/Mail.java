@@ -20,7 +20,7 @@ public class Mail
     public String strAuthor = "";
     public String strMsg = "";
     public String strItem = "";
-    public ItemStack stack = null;
+    public ItemStack stack = ItemStack.EMPTY;
     public int weight = 0;
     //public ArrayList<String> strMsg;
     //public String[] strMsg = new String[14];
@@ -53,18 +53,33 @@ public class Mail
      * @param posIn
      * @return
      */
-    public static ItemStack createMansionMap(World worldIn, BlockPos posIn, String strType)
+    public static ItemStack createMap(World worldIn, BlockPos posIn, String strType)
     {
         ItemStack stack = ItemStack.EMPTY;
         if (worldIn.isRemote) { return stack; }
 
+        //■マーカーのタイプ選択
         MapDecoration.Type type = MapDecoration.Type.TARGET_POINT;
         if (strType.equals("Mansion"))
         {
             type = MapDecoration.Type.MANSION;
         }
 
-        BlockPos blockpos = worldIn.findNearestStructure(strType, posIn, true);
+        //■マップのターゲットポイントを探る
+        BlockPos blockpos = null;
+        if (strType.equals("WoodChest"))
+        {
+            //■引数3つめ「対象は未探索Chunk？ はい:true・いいえ:false」
+            blockpos = BottleMail.proxy.getTreasureMapGen().getClosestStrongholdPos(worldIn, posIn, true);
+            //Debug
+            //System.out.println("x=" + blockpos.getX() + " : z=" + blockpos.getZ());
+        }
+        else
+        {
+            blockpos = worldIn.findNearestStructure(strType, posIn, true);
+        }
+
+        //■ターゲット、ロックオン！
         if (blockpos != null)
         {
             stack = ItemMap.setupNewMap(worldIn, (double)blockpos.getX(), (double)blockpos.getZ(), (byte)2, true, true);
