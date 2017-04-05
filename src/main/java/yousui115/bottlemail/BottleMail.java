@@ -1,7 +1,10 @@
 package yousui115.bottlemail;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.Biomes;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -21,6 +24,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import yousui115.bottlemail.client.gui.GuiHandler;
 import yousui115.bottlemail.entity.EntityBottleMail;
+import yousui115.bottlemail.entity.EntityBottleMail.EntityBottleMailFloat;
 import yousui115.bottlemail.event.EventHndl;
 import yousui115.bottlemail.item.ItemBottleMail;
 import yousui115.bottlemail.item.ItemPieceOfPaper;
@@ -96,6 +100,9 @@ public class BottleMail
         EntityRegistry.registerModEntity(rlBM, EntityBottleMail.class, "BottleMail", 1, this, 64, 10, false);
         EntityRegistry.addSpawn(EntityBottleMail.class, weightSpawn, 1, 1, EnumCreatureType.AMBIENT, (Biome[]) Biome.EXPLORATION_BIOMES_LIST.toArray(new Biome[0]));
 
+        EntityRegistry.registerModEntity(new ResourceLocation(MOD_ID, BottleMail.NAME_BM + "_float"), EntityBottleMailFloat.class, "BottleMailFloat", 2, this, 64, 10, false);
+        EntityRegistry.addSpawn(EntityBottleMailFloat.class, weightSpawn, 1, 1, EnumCreatureType.WATER_CREATURE, Biomes.DEEP_OCEAN);
+
         //■テクスチャ・モデル指定JSONファイル名の登録。
         proxy.registerModels();
 
@@ -104,8 +111,9 @@ public class BottleMail
 
         //■チェスト
         WOOD_CHEST = new ResourceLocation(MOD_ID, "chests/woodchest");
-
         LootTableList.register(WOOD_CHEST);
+
+        EntitySpawnPlacementRegistry.setPlacementType(EntityBottleMailFloat.class, EntityLiving.SpawnPlacementType.IN_WATER);
     }
 
     /**

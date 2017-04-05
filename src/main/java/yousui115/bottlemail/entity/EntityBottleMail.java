@@ -19,6 +19,9 @@ import yousui115.bottlemail.BottleMail;
 //TODO: Entity継承だと自然スポーンの設定が
 //      超めんどくせーっぽいからEntityLivingを継承してる。
 //      詳しく調べてないので、もっとうまい方法があるかもしれない。
+
+//TODO: りふぁくたりんぐ
+
 public class EntityBottleMail extends EntityLiving
 {
     public float fRot = 0f;
@@ -71,14 +74,9 @@ public class EntityBottleMail extends EntityLiving
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound tagCompund)
-    {
-    }
-
+    public void readEntityFromNBT(NBTTagCompound tagCompund){}
     @Override
-    public void writeEntityToNBT(NBTTagCompound tagCompound)
-    {
-    }
+    public void writeEntityToNBT(NBTTagCompound tagCompound){}
 
     /**
      * ■プレイヤーが右クリックすると呼ばれる
@@ -121,6 +119,7 @@ public class EntityBottleMail extends EntityLiving
     /**
      * Checks if the entity's current position is a valid location to spawn this entity.
      */
+    @Override
     public boolean getCanSpawnHere()
     {
         //■スポーンの対象地点
@@ -180,5 +179,73 @@ public class EntityBottleMail extends EntityLiving
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
         return false;
+    }
+
+
+
+    public static class EntityBottleMailFloat extends EntityBottleMail
+    {
+        public EntityBottleMailFloat(World worldIn)
+        {
+            super(worldIn);
+        }
+
+        public EntityBottleMailFloat(World worldIn, double dx, double dy, double dz)
+        {
+            super(worldIn, dx, dy, dz);
+        }
+
+        @Override
+        public void onUpdate()
+        {
+            //■ボトルくるくる
+            fRot += 1.0f;
+            if (fRot > 360f) { fRot = fRot % 360f; }
+
+            //■ボトルの浮き沈み
+            dUD += 0.05;
+            if (dUD > 360) { dUD = dUD % 360; }
+        }
+
+        @Override
+        public boolean getCanSpawnHere()
+        {
+            //■スポーンの対象地点
+            int nX = MathHelper.floor(posX);
+            int nY = MathHelper.floor(posY);
+            int nZ = MathHelper.floor(posZ);
+
+            BlockPos pos = new BlockPos(nX, nY, nZ);
+            Block block = this.getEntityWorld().getBlockState(pos).getBlock();
+
+            if (nY == 62 &&
+                !this.getEntityWorld().canSeeSky(pos))
+            {
+                //DEBUG
+                System.out.println("x = " + nX + " : y = " + nY + " : z = " + nZ);
+                this.posY += 0.75;
+                return true;
+            }
+
+            return false;
+        }
+
+        @Override
+        public boolean canBreatheUnderwater()
+        {
+            return true;
+        }
+
+        @Override
+        public boolean isNotColliding()
+        {
+            return this.world.checkNoEntityCollision(this.getEntityBoundingBox(), this);
+        }
+
+        @Override
+        public boolean isPushedByWater()
+        {
+            return false;
+        }
     }
 }

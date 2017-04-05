@@ -206,7 +206,7 @@ public class ComponentTreasurePieces
                         this.replaceAirAndLiquidDownwards(worldIn, Blocks.DIRT.getDefaultState(), x, -1, z, structureBoundingBoxIn);
                     }
                 }
-//                this.setBlockState(worldIn, Blocks.DIRT.getDefaultState(), 0, -1, 0, structureBoundingBoxIn);
+//                this.setBlockState(worldIn, Blocks.DIRT.getDefaultState(), x, -1, z, structureBoundingBoxIn);
 
                 //■葉
                 this.fillWithBlocks(worldIn, structureBoundingBoxIn, -1, 5, -1, 1, 7, 1, Blocks.LEAVES.getDefaultState(),Blocks.LEAVES.getDefaultState(), false);

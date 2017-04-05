@@ -7,6 +7,7 @@ import yousui115.bottlemail.BottleMail;
 import yousui115.bottlemail.CommonProxy;
 import yousui115.bottlemail.client.model.RenderBottleMail;
 import yousui115.bottlemail.entity.EntityBottleMail;
+import yousui115.bottlemail.entity.EntityBottleMail.EntityBottleMailFloat;
 import yousui115.bottlemail.item.ItemPieceOfPaper;
 
 public class ClientProxy extends CommonProxy
@@ -38,5 +39,8 @@ public class ClientProxy extends CommonProxy
     {
         //■Renderの登録 及び EntityとRenderの関連付け
         RenderingRegistry.registerEntityRenderingHandler(EntityBottleMail.class, new RenderBottleMail.Factory());
+
+        RenderingRegistry.registerEntityRenderingHandler(EntityBottleMailFloat.class, new RenderBottleMail.Factory());
+
     }
 }
