@@ -1,8 +1,8 @@
 # ボトルメール
 
-## ■DL (M1112_F2228_v2)
+## ■DL (M1112_F2228_v3)
 
-https://www.dropbox.com/s/or4msp7ewpvxwnc/bottlemail_M1112_F2228_v2.jar?dl=0<br>
+https://www.dropbox.com/s/meqba95wg6sb9eq/bottlemail_M1112_F2228_v3.jar?dl=0<br>
 
 ## ■動作環境
 

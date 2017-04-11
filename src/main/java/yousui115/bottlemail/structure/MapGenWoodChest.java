@@ -57,49 +57,48 @@ public class MapGenWoodChest extends MapGenStructure
     @Override
     protected boolean canSpawnStructureAtCoords(int chunkXIn, int chunkZIn)
     {
-//        int chunkX = chunkXIn;
-//        int chunkZ = chunkZIn;
-//
-//        if (chunkXIn < 0)
-//        {
-//            chunkXIn -= this.maxChunkDistanceBetweenF - 1;
-//        }
-//
-//        if (chunkZIn < 0)
-//        {
-//            chunkZIn -= this.maxChunkDistanceBetweenF - 1;
-//        }
-//
-//        int x = chunkXIn / this.maxChunkDistanceBetweenF;
-//        int z = chunkZIn / this.maxChunkDistanceBetweenF;
-//        Random random = this.world.setRandomSeed(x, z, 14357617);
-//        x = x * this.maxChunkDistanceBetweenF;
-//        z = z * this.maxChunkDistanceBetweenF;
-//        x = x + random.nextInt(this.maxChunkDistanceBetweenF - 8);
-//        z = z + random.nextInt(this.maxChunkDistanceBetweenF - 8);
-//
-//        if (chunkX == x && chunkZ == z)
-//        {
-//            //■チャンクの中央位置
-//            BlockPos pos = new BlockPos(chunkX * 16 + 8, 0, chunkZ * 16 + 8);
-//
-//            //■バイオームの調査
-//            Biome biome = this.world.getBiomeProvider().getBiome(pos);
-//            if (biome == null) { return false; }
-//
-//            for (Biome biome1 : BIOMELIST)
-//            {
-//                if (biome == biome1)
-//                {
-//                    //DEBUG
-//                    //System.out.println("x = " + pos.getX() + " : z = " + pos.getZ());
-//                    return true;
-//                }
-//            }
-//        }
-//
-//        return false;
-        return true;
+        int chunkX = chunkXIn;
+        int chunkZ = chunkZIn;
+
+        if (chunkXIn < 0)
+        {
+            chunkXIn -= this.maxChunkDistanceBetweenF - 1;
+        }
+
+        if (chunkZIn < 0)
+        {
+            chunkZIn -= this.maxChunkDistanceBetweenF - 1;
+        }
+
+        int x = chunkXIn / this.maxChunkDistanceBetweenF;
+        int z = chunkZIn / this.maxChunkDistanceBetweenF;
+        Random random = this.world.setRandomSeed(x, z, 14357617);
+        x = x * this.maxChunkDistanceBetweenF;
+        z = z * this.maxChunkDistanceBetweenF;
+        x = x + random.nextInt(this.maxChunkDistanceBetweenF - 8);
+        z = z + random.nextInt(this.maxChunkDistanceBetweenF - 8);
+
+        if (chunkX == x && chunkZ == z)
+        {
+            //■チャンクの中央位置
+            BlockPos pos = new BlockPos(chunkX * 16 + 8, 0, chunkZ * 16 + 8);
+
+            //■バイオームの調査
+            Biome biome = this.world.getBiomeProvider().getBiome(pos);
+            if (biome == null) { return false; }
+
+            for (Biome biome1 : BIOMELIST)
+            {
+                if (biome == biome1)
+                {
+                    //DEBUG
+                    //System.out.println("x = " + pos.getX() + " : z = " + pos.getZ());
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override

@@ -59,18 +59,6 @@ public class EntityBottleMail extends EntityLiving
     @Override
     public void onUpdate()
     {
-        //this.onEntityUpdate();
-        //super.onUpdate();
-
-        //TODO: あまりにも海抜0mの海面に湧かないので
-        //      砂浜に打ち上げられたものに変更。がっでむ
-        //■ボトルくるくる
-//        fRot += 1.0f;
-//        if (fRot > 360f) { fRot = fRot % 360f; }
-//
-//        //■ボトルの浮き沈み
-//        dUD += 0.05;
-//        if (dUD > 360) { dUD = dUD % 360; }
     }
 
     @Override
@@ -183,6 +171,10 @@ public class EntityBottleMail extends EntityLiving
 
 
 
+    /**
+     * ■ただようボトルメール
+     *
+     */
     public static class EntityBottleMailFloat extends EntityBottleMail
     {
         public EntityBottleMailFloat(World worldIn)
@@ -218,11 +210,27 @@ public class EntityBottleMail extends EntityLiving
             BlockPos pos = new BlockPos(nX, nY, nZ);
             Block block = this.getEntityWorld().getBlockState(pos).getBlock();
 
+            //■近くのEntityをリストアップ
+            boolean isNearBottle = false;
+            double dExpand = 15f;
+            List<Entity> list = this.getEntityWorld().getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(dExpand, 0, dExpand));
+            for (Entity entity : list)
+            {
+                //■EntityBottleMailが周囲に置いてあるとfalse
+                if (entity instanceof EntityBottleMail)
+                {
+                    isNearBottle = true;
+                    break;
+                }
+            }
+
+            //■スポーンするか否か
             if (nY == 62 &&
-                !this.getEntityWorld().canSeeSky(pos))
+                !this.getEntityWorld().canSeeSky(pos) &&
+                !isNearBottle)
             {
                 //DEBUG
-                System.out.println("x = " + nX + " : y = " + nY + " : z = " + nZ);
+//                System.out.println("x = " + nX + " : y = " + nY + " : z = " + nZ);
                 this.posY += 0.75;
                 return true;
             }

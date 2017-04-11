@@ -88,7 +88,7 @@ public class RenderBottleMail extends Render<EntityBottleMail>
     @Override
     protected ResourceLocation getEntityTexture(EntityBottleMail entity)
     {
-        return new ResourceLocation(BottleMail.MOD_ID + ":textures/models/ModelBottleMail.png");
+        return new ResourceLocation(BottleMail.MOD_ID + ":textures/models/modelbottlemail.png");
     }
 
     /**
