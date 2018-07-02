@@ -3,6 +3,9 @@ package yousui115.bottlemail.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -18,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yousui115.bottlemail.BottleMail;
-import yousui115.bottlemail.Mail;
+import yousui115.bottlemail.util.Mail;
 
 public class ItemPieceOfPaper extends Item
 {
@@ -61,37 +64,22 @@ public class ItemPieceOfPaper extends Item
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
         Mail mail = this.getMail(stack.getMetadata());
         if (mail != null && !StringUtils.isNullOrEmpty(mail.strAuthor))// && mail.strTitle != "")
         {
             tooltip.add(TextFormatting.GRAY + I18n.translateToLocalFormatted("book.byAuthor", new Object[] {mail.strAuthor}));
         }
-
-//        if (stack.hasTagCompound())
-//        {
-//            NBTTagCompound nbttagcompound = stack.getTagCompound();
-//            String s = "abcde";//nbttagcompound.getString("author");
-//
-//            if (!StringUtils.isNullOrEmpty(s))
-//            {
-//                tooltip.add(TextFormatting.GRAY + I18n.translateToLocalFormatted("book.byAuthor", new Object[] {s}));
-//            }
-//
-//            tooltip.add(TextFormatting.GRAY + I18n.translateToLocal("book.generation." + nbttagcompound.getInteger("generation")));
-//        }
     }
 
     /**
      * ■右クリックを押すと呼ばれる。
      */
     @Override
-//    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
-//    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
     {
-        playerIn.openGui(BottleMail.instance, BottleMail.STATUS_GUI_ID, worldIn, MathHelper.ceiling_double_int(playerIn.posX), MathHelper.ceiling_double_int(playerIn.posY), MathHelper.ceiling_double_int(playerIn.posZ));
+        playerIn.openGui(BottleMail.instance, BottleMail.STATUS_GUI_ID, worldIn, MathHelper.ceil(playerIn.posX), MathHelper.ceil(playerIn.posY), MathHelper.ceil(playerIn.posZ));
 
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
@@ -102,14 +90,16 @@ public class ItemPieceOfPaper extends Item
      */
     @Override
     @SideOnly(Side.CLIENT)
-//    public void getSubItems(Item itemIn, CreativeTabs tab, List subItems)
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
     {
-        int i = ItemPieceOfPaper.listMails.size();
-
-        for (int j = 0; j < i; ++j)
+        if (this.isInCreativeTab(tab))
         {
-            subItems.add(new ItemStack(this, 1, j));
+            int i = ItemPieceOfPaper.listMails.size();
+
+            for (int j = 0; j < i; ++j)
+            {
+                items.add(new ItemStack(this, 1, j));
+            }
         }
     }
 

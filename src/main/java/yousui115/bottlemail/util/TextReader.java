@@ -1,9 +1,8 @@
-package yousui115.bottlemail;
+package yousui115.bottlemail.util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
@@ -59,7 +58,7 @@ public class TextReader
 
             //■テスト環境？ 本番環境？
             int length = strSource.length();
-            boolean isJar = strSource.substring(length - 4).contains(".jar");
+            boolean isJar = strSource.endsWith(".jar");
             if (isJar)
             {
                 //■本番環境
@@ -68,7 +67,6 @@ public class TextReader
             else
             {
                 //■テスト環境
-                //readFolder(builder);
                 readXML(builder.parse(this.strSource + "\\" + this.strFile));
 
             }
@@ -92,7 +90,7 @@ public class TextReader
      */
     private void readJar(DocumentBuilder builder)
     {
-        System.out.println("######################  readJar() ##########################");
+        System.out.println("######################  readJar()  ##########################");
 
         try
         {
@@ -136,7 +134,7 @@ public class TextReader
      */
     private void readXML(Document doc)
     {
-        System.out.println("######################  readXML() ##########################");
+        System.out.println("######################  readXML()  ##########################");
 
         Element element0 = doc.getDocumentElement();
         NodeList nodelist0 = element0.getChildNodes();
@@ -201,43 +199,6 @@ public class TextReader
             //■メールを追加
             ItemPieceOfPaper.addMail(mail);
         }
-
-    }
-
-    /**
-     * ■構文解析
-     */
-    private ArrayList<String> parse(String message)
-    {
-        String[] paragraph = message.split(",", 0);
-        ArrayList<String> listMsg = new ArrayList<String>();
-
-        for (int i = 0; i < paragraph.length; i++)
-        {
-            StringBuilder sb1 = new StringBuilder(paragraph[i]);
-
-            //while(!paragraph[i].isEmpty())
-            while(sb1.length() > 0)
-            {
-                int del = sb1.length() < 13 ? sb1.length() : 13;
-
-                //TODO:機能してねー！
-                if (sb1.length() > 13 &&
-                    ("。".compareTo(sb1.substring(14, 15)) == 0 ||
-                     "、".compareTo(sb1.substring(14, 15)) == 0 ))
-                {
-                    del = 14;
-                }
-
-                listMsg.add(sb1.substring(0, del));
-                sb1.delete(0, del);
-
-                if (listMsg.size() >= 14) { break; }
-            }
-            if (listMsg.size() >= 14) { break; }
-        }
-
-        return listMsg;
     }
 
     private void streamErr(String strErr)

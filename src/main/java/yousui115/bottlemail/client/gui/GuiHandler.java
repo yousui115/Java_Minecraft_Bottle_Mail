@@ -8,8 +8,8 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import yousui115.bottlemail.BottleMail;
-import yousui115.bottlemail.Mail;
 import yousui115.bottlemail.item.ItemPieceOfPaper;
+import yousui115.bottlemail.util.Mail;
 
 public class GuiHandler implements IGuiHandler
 {

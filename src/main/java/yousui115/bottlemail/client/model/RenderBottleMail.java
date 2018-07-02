@@ -54,7 +54,7 @@ public class RenderBottleMail extends Render<EntityBottleMail>
 
         //■FILOで処理される
         // ▼4. 適正位置
-        GlStateManager.translate((float)x, (float)(y + 0.1 + Math.sin(bottle.dUD) * 0.1d), (float)z);
+        GlStateManager.translate((float)x, (float)(y + 0.1 + Math.sin(bottle.dUD) * 0.05d), (float)z);
 
         // ▼3. X軸回転
         GlStateManager.rotate(100.0F, 1.0F, 0.0F, 0.0F);
@@ -88,7 +88,7 @@ public class RenderBottleMail extends Render<EntityBottleMail>
     @Override
     protected ResourceLocation getEntityTexture(EntityBottleMail entity)
     {
-        return new ResourceLocation(BottleMail.MOD_ID + ":textures/models/ModelBottleMail.png");
+        return new ResourceLocation(BottleMail.MOD_ID + ":textures/models/modelbottlemail.png");
     }
 
     /**

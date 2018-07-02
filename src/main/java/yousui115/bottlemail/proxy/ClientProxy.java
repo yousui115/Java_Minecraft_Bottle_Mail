@@ -1,12 +1,12 @@
-package yousui115.bottlemail.client;
+package yousui115.bottlemail.proxy;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import yousui115.bottlemail.BottleMail;
-import yousui115.bottlemail.CommonProxy;
 import yousui115.bottlemail.client.model.RenderBottleMail;
 import yousui115.bottlemail.entity.EntityBottleMail;
+import yousui115.bottlemail.entity.EntityBottleMail.EntityBottleMailFloat;
 import yousui115.bottlemail.item.ItemPieceOfPaper;
 
 public class ClientProxy extends CommonProxy
@@ -15,7 +15,7 @@ public class ClientProxy extends CommonProxy
      * ■モデルの登録
      */
     @Override
-    public void registerModels()
+    public void registerItemModels()
     {
         // ★紙切れ
         for (int i = 0; i < ItemPieceOfPaper.getMailMax(); i++)
@@ -39,6 +39,7 @@ public class ClientProxy extends CommonProxy
         //■Renderの登録 及び EntityとRenderの関連付け
         RenderingRegistry.registerEntityRenderingHandler(EntityBottleMail.class, new RenderBottleMail.Factory());
 
+        RenderingRegistry.registerEntityRenderingHandler(EntityBottleMailFloat.class, new RenderBottleMail.Factory());
 
     }
 }

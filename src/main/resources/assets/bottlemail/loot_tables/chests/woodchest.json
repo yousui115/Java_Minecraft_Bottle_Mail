@@ -1,0 +1,151 @@
+{
+    "pools": [
+        {
+            "name": "woodchest_sword",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:iron_sword",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_nbt",
+                            "tag": 
+                            "{
+                                HideFlags: 7,
+                                display: {
+                                    Name: \"冒険者の剣\",
+                                    Lore: [
+                                        \"欠けた刃が「修繕」されていく様は\",
+                                        \"不気味の一言だ、と「周囲」の誰かが呟いた。\"
+                                    ]
+                                },
+                                ench: [
+                                    {
+                                        id:70,
+                                        lvl:1
+                                    },
+                                    {
+                                        id:22,
+                                        lvl:3
+                                    }
+                                ]
+                            }"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "woodchest_chestplate",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:chainmail_chestplate",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_nbt",
+                            "tag": 
+                            "{
+                                HideFlags: 7,
+                                display: {
+                                    Name: \"冒険者のチェストプレート\",
+                                    Lore: [
+                                        \"「強固」で「頑丈」な「棘」を操る者は、\",
+                                        \"それに「束縛」されている事に気付いていない。\"
+                                    ]
+                                },
+                                ench: [
+                                    {
+                                        id: 0,
+                                        lvl: 4
+                                    },
+                                    {
+                                        id: 7,
+                                        lvl: 3
+                                    },
+                                    {
+                                        id: 10,
+                                        lvl: 1
+                                    },
+                                    {
+                                        id: 34,
+                                        lvl: 3
+                                    }
+                                ]
+                            }"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "woodchest_zakka",
+            "rolls": 4,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:emerald",
+                    "weight": 15,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 3
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:diamond",
+                    "weight": 15,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 3
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:golden_apple",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "woodchest_pearl",
+            "rolls": 3,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:ender_pearl",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
